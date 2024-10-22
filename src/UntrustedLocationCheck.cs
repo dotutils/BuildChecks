@@ -3,7 +3,7 @@ using Microsoft.Build.Experimental.BuildCheck;
 using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
-using Microsoft.IO;
+using System.IO;
 
 namespace DotUtils.BuildChecks
 {
