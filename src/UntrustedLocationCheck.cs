@@ -52,7 +52,14 @@ namespace DotUtils.BuildChecks
 
             private static string GetDownloadsPath()
             {
-                return SHGetKnownFolderPath(new Guid("374DE290-123F-4565-9164-39C4925E467B"), 0, IntPtr.Zero);
+                if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+                {
+                    return SHGetKnownFolderPath(new Guid("374DE290-123F-4565-9164-39C4925E467B"), 0, IntPtr.Zero);
+                }
+                else
+                {
+                    return Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "Downloads");
+                }
             }
 
             [DllImport("shell32",

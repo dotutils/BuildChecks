@@ -5,7 +5,7 @@
     <DevelopmentDependency>true</DevelopmentDependency>
     <IncludeBuildOutput>false</IncludeBuildOutput>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-	<PackageVersion>0.0.2-beta</PackageVersion>
+	<PackageVersion>0.0.3-beta</PackageVersion>
 	<LangVersion>9.0</LangVersion>
     <!-- The output structure was modified for msbuild development needs.-->
     <NoWarn>NU5101;NU5128</NoWarn>
