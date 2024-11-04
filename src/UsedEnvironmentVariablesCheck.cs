@@ -75,7 +75,7 @@ namespace DotUtils.BuildChecks
                             context.ReportResult(BuildCheckResult.Create(
                                 SupportedRule,
                                 context.Data.EnvironmentVariableLocation,
-                                $"{sv.SubKind} with value: '{(IsVerbose && sv.Secret.Length < 10  ? sv.Secret : sv.Secret.Substring(0,10) + "***")}'"));
+                                $"{sv.SubKind} with value: '{(IsVerbose ? sv.Secret : sv.Secret.Substring(0,3) + "***")}'"));
                         }
                     }
                 }
