@@ -1,4 +1,6 @@
 ﻿using DotUtils.MsBuild.SensitiveDataDetector;
+using Microsoft.Build.BuildCheck.Infrastructure;
+using Microsoft.Build.Construction;
 using Microsoft.Build.Experimental.BuildCheck;
 using Microsoft.Build.SensitiveDataDetector;
 using Microsoft.Build.Shared;
@@ -18,6 +20,8 @@ namespace DotUtils.BuildChecks
 
         private readonly List<ISensitiveDataDetector> secretsDetectors = new List<ISensitiveDataDetector>();
 
+        private EvaluationCheckScope _scope;
+
         private const string RuleId = "DU0202";
 
         private const string VerboseOutputKey = "allow_displaying_property_value";
@@ -29,7 +33,7 @@ namespace DotUtils.BuildChecks
             "Detected secret: {0}",
             new CheckConfiguration());
 
-        public override string FriendlyName => "DotUtils.UsedEnvironmentVariablesSecrets";
+        public override string FriendlyName => "DotUtils.EnvironmentVariableSecretsCheck";
 
         public bool IsVerbose { get; set; }
 
@@ -38,6 +42,8 @@ namespace DotUtils.BuildChecks
         // Custom configuration for the check
         public override void Initialize(ConfigurationContext configurationContext)
         {
+            _scope = configurationContext.CheckConfig[0].EvaluationCheckScope;
+
             foreach (CustomConfigurationData customConfigurationData in configurationContext.CustomConfigurationData)
             {
                 if (customConfigurationData.RuleId.Equals(RuleId, StringComparison.InvariantCultureIgnoreCase)
@@ -46,7 +52,7 @@ namespace DotUtils.BuildChecks
                     IsVerbose = !string.IsNullOrEmpty(configVal) && bool.Parse(configVal);
                 }
             }
-         }
+        }
 
         public EnvironmentVariableSecretsCheck()
         {
@@ -62,25 +68,34 @@ namespace DotUtils.BuildChecks
 
         private void EnvironmentVariableUsedAction(BuildCheckDataContext<EnvironmentVariableCheckData> context)
         {
-            EnvironmentVariableIdentityKey identityKey = new(context.Data.EnvironmentVariableName, context.Data.EnvironmentVariableLocation);
-            if (!_environmentVariablesCache.Contains(identityKey))
+            // Scope information is available after evaluation of the project file. If it is not ready, we will report the check later.
+            if (!CheckScopeClassifier.IsScopingReady(_scope))
             {
-                foreach (var detector in secretsDetectors)
+                _buildCheckResults.Enqueue((context.Data.ProjectFilePath, context));
+            }
+            else if (CheckScopeClassifier.IsActionInObservedScope(_scope, context.Data.EnvironmentVariableLocation.File, context.Data.ProjectFilePath))
+            {
+
+                EnvironmentVariableIdentityKey identityKey = new(context.Data.EnvironmentVariableName, context.Data.EnvironmentVariableLocation);
+                if (!_environmentVariablesCache.Contains(identityKey))
                 {
-                    var secrets = detector.Detect(context.Data.EnvironmentVariableValue);
-                    foreach (var secret in secrets)
+                    foreach (var detector in secretsDetectors)
                     {
-                        foreach (var sv in secret.Value)
+                        var secrets = detector.Detect(context.Data.EnvironmentVariableValue);
+                        foreach (var secret in secrets)
                         {
-                            context.ReportResult(BuildCheckResult.Create(
-                                SupportedRule,
-                                context.Data.EnvironmentVariableLocation,
-                                $"{sv.SubKind} with value: '{(IsVerbose ? sv.Secret : sv.Secret.Substring(0,3) + "***")}'"));
+                            foreach (var sv in secret.Value)
+                            {
+                                context.ReportResult(BuildCheckResult.Create(
+                                    SupportedRule,
+                                    context.Data.EnvironmentVariableLocation,
+                                    $"{sv.SubKind} with value: '{(IsVerbose ? sv.Secret : sv.Secret.Substring(0, 3) + "***")}'"));
+                            }
                         }
                     }
-                }
 
-                _environmentVariablesCache.Add(identityKey);
+                    _environmentVariablesCache.Add(identityKey);
+                }
             }
         }
 
