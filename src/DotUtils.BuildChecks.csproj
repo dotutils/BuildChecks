@@ -5,8 +5,8 @@
     <DevelopmentDependency>true</DevelopmentDependency>
     <IncludeBuildOutput>false</IncludeBuildOutput>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-	<PackageVersion>0.0.4-beta</PackageVersion>
-	<LangVersion>9.0</LangVersion>
+	  <PackageVersion>0.0.5-beta</PackageVersion>
+	  <LangVersion>9.0</LangVersion>
     <!-- The output structure was modified for msbuild development needs.-->
     <NoWarn>NU5101;NU5128</NoWarn>
   </PropertyGroup>
@@ -16,9 +16,10 @@
     <Content Include="..\README.md" />
   </ItemGroup>
 
+
   <ItemGroup>
-    <!-- Please add IncludeInPackage field to all third party dependencies. See the example below.-->
-    <PackageReference Include="Microsoft.Build" PrivateAssets="all" IncludeInPackage="true" />
+    <PackageReference Include="Microsoft.Build" PrivateAssets="all" />
+		<PackageReference Include="DotUtils.MsBuild.BinlogRedactor.SensitiveDataDetector" IncludeInPackage="true" />
   </ItemGroup>
 
   <Target Name="AddNuGetDlls" BeforeTargets="_GetPackageFiles">
