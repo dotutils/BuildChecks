@@ -7,7 +7,7 @@ using System.Collections.Generic;
 
 namespace DotUtils.BuildChecks
 {
-    public sealed class UsedEnvironmentVariablesCheck : Check
+    public sealed class EnvironmentVariableSecretsCheck : Check
     {
         /// <summary>
         /// Contains the list of viewed environment variables.
@@ -48,7 +48,7 @@ namespace DotUtils.BuildChecks
             }
          }
 
-        public UsedEnvironmentVariablesCheck()
+        public EnvironmentVariableSecretsCheck()
         {
             secretsDetectors.Add(SensitiveDataDetectorFactory.GetSecretsDetector(SensitiveDataKind.CommonSecrets, false));
             secretsDetectors.Add(SensitiveDataDetectorFactory.GetSecretsDetector(SensitiveDataKind.ExplicitSecrets, false));

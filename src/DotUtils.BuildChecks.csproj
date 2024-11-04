@@ -10,11 +10,12 @@
 		<Nullable>enable</Nullable>
 		<!-- The output structure was modified for msbuild development needs.-->
 		<NoWarn>NU5101;NU5128</NoWarn>
+		<PackageReadmeFile>README.md</PackageReadmeFile>
 	</PropertyGroup>
 
 	<ItemGroup>
 		<None Include="DotUtils.BuildChecks.props" Pack="true" PackagePath="build\DotUtils.BuildChecks.props" />
-		<Content Include="..\README.md" />
+		<None Include="..\README.md" Pack="true" PackagePath="\"/>
 	</ItemGroup>
 
 
