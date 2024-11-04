@@ -10,9 +10,9 @@ The UsedEnvironmentVariablesCheck is a custom MSBuild check that detects sensiti
 The check automatically monitors environment variable access during the build process. 
 
 When a secret is detected, it generates a build warning with the following information:
-Secret type (SubKind)
-Secret value (truncated based on verbose settings)
-Location in build files (file, line, column)
+- Secret type (SubKind)
+- Secret value (truncated based on verbose settings)
+- Location in build files (file, line, column)
 
 ### Example Output
 `warning DU0202: CommonSecret with value: 'APIKey123***' at project.props(12,5)`
