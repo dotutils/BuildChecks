@@ -6,7 +6,8 @@
     <IncludeBuildOutput>false</IncludeBuildOutput>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
 	  <PackageVersion>0.0.5-beta</PackageVersion>
-	  <LangVersion>9.0</LangVersion>
+	  <LangVersion>latest</LangVersion>
+    <Nullable>enable</Nullable>
     <!-- The output structure was modified for msbuild development needs.-->
     <NoWarn>NU5101;NU5128</NoWarn>
   </PropertyGroup>

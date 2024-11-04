@@ -5,5 +5,6 @@
   </PropertyGroup>
   <ItemGroup>
     <PackageVersion Include="Microsoft.Build" Version="17.13.0-dev-24518-01" />
+    <PackageVersion Include="DotUtils.MsBuild.BinlogRedactor.SensitiveDataDetector" Version="0.0.9" />
   </ItemGroup>
 </Project>

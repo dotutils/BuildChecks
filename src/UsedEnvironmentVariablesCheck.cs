@@ -18,8 +18,12 @@ namespace DotUtils.BuildChecks
 
         private readonly List<ISensitiveDataDetector> secretsDetectors = new List<ISensitiveDataDetector>();
 
+        private const string RuleId = "DU0202";
+
+        private const string VerboseOutputKey = "allow_displaying_property_value";
+
         public static CheckRule SupportedRule = new CheckRule(
-            "DU0202",
+            RuleId,
             "SecretsDetector",
             "The check for detecting secrets in the used environment variables.",
             "Detected secret: {0}",
