@@ -5,7 +5,7 @@ It is strongly recommended not to place MSBuild project files into locations whe
 That is because MSBuild (more specifically SDK common targets) hierarchically traverses folder structure for auto-importable msbuild logic.
 This Check flags attempts to build from Downloads folder.
 
-## UntrustedLocationCheck
+## UsedEnvironmentVariablesCheck
 The UsedEnvironmentVariablesCheck is a custom MSBuild check that detects sensitive data and secrets in environment variables used during the build process. This check helps identify potential security risks by scanning environment variable values for common secrets, explicit secrets, and usernames.
 The check automatically monitors environment variable access during the build process. 
 
