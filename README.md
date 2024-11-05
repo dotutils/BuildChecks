@@ -20,5 +20,20 @@ Example Output
 Copywarning DU0202: CommonSecret with value: 'APIKey123***' at project.props(12,5)
 warning DU0202: Username with value: 'admin@comp***' at Directory.Build.props(25,10)
 
+## ImportedProjectsSecretsCheck
+The ImportedProjectsSecretsCheck is a custom MSBuild check that scans imported project files for sensitive data and secrets during the build process. This security-focused check examines the content of imported .props and .targets files to identify potential security risks such as common secrets, explicit secrets, and usernames embedded in the project files.
+
+The check automatically scans project files when they are imported during the build process. It respects the configured evaluation scope to determine which imported files should be analyzed.
+
+When a secret is detected, it generates a build warning with the following information:
+- Secret type (CommonSecrets, ExplicitSecrets, or Username)
+- The detected secret value
+- Precise location within the imported file (file path, line, column)
+
+### Example Output
+`warning DU0203: CommonSecret with value: 'SuperSecretToken123' at imported/custom.props(15,8)`
+
+Note: The check considers the evaluation scope configuration to determine which imported projects to analyze, helping to focus the security scanning on relevant project files within your build hierarchy.
+
 ## UnexpectedNugetBuildLogic
 TBD
