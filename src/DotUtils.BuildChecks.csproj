@@ -5,7 +5,7 @@
     <DevelopmentDependency>true</DevelopmentDependency>
     <IncludeBuildOutput>false</IncludeBuildOutput>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-    <PackageVersion>0.0.5-beta</PackageVersion>
+    <PackageVersion>0.0.6-beta</PackageVersion>
     <LangVersion>latest</LangVersion>
     <Nullable>enable</Nullable>
     <!-- The output structure was modified for msbuild development needs.-->
